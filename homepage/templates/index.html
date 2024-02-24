@@ -67,7 +67,7 @@
                       </h1>
                       <p>
                         Analysecraft is a versatile web-based platform tailored for data analysis enthusiasts. Seamlessly handling CSV files, Analysecraft empowers users with an array of functions for insightful exploration. From basic statistical summaries to advanced calculations, users navigate through data effortlessly. The platform offers an intuitive interface for generating diverse graphs, including histograms, scatter plots, and line charts, unveiling trends and patterns within datasets. With its interactive features, users can customize analyses and visualize data dynamics effectively. Analysecraft is a comprehensive tool for data aficionados, fostering deep understanding and informed decision-making through its user-friendly interface and robust analytical capabilities.                      </p>
-                      <a href="">
+                      <a href="#csv">
                         Get Started..
                       </a>
                     </div>
@@ -94,7 +94,7 @@
 
   <!-- saving section -->
 
-  <section class="saving_section ">
+  <section class="saving_section " id="csv">
     <div class="box">
       <div class="container-fluid">
         <div class="row">
@@ -114,9 +114,11 @@
               <p>
               </p>
               <div class="btn-box">
-                <a href="#" class="btn1">
-                  Upload
-                </a>
+                <form method="post" enctype="multipart/form-data" action="{% url 'process_csv' %}">
+                    {% csrf_token %}
+                    <input type="file" name="csv_file">
+                    <button style="padding: 10px;" class="btn1" type="submit">Upload</button>
+                  </form>
               </div>
             </div>
           </div>

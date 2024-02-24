@@ -1,0 +1,40 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analysecraft</title>
+    <link href="{% static 'css/analyse.css' %}" rel="stylesheet" />
+    <style>
+        /* Style for the container div */
+        .container {
+            margin-left: -400px; /* Horizontally center the container */
+        }
+    </style>
+</head>
+<body>
+    <div class="search__container">
+        <p class="search__title">
+            Successfully your file has been uploaded..! 
+        </p>
+        <input class="search__input" type="text" placeholder="Search">
+    </div>
+    
+    <div class="credits__container">
+        <p class="credits__text">start searching for your function..!</p>
+    </div>
+    <div class="container">
+        <h2>CSV Analysis Results</h2>
+    <p>Number of rows: {{ csv_details.num_rows }}</p>
+    <p>Number of columns: {{ csv_details.num_columns }}</p>
+    <p>Column names:</p>
+    <ul>
+        {% for column_name in csv_details.column_names %}
+            <li>{{ column_name }}</li>
+        {% endfor %}
+    </ul>
+    </div>
+</body>
+</html>
