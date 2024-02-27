@@ -19,12 +19,74 @@
         <p class="search__title">
             Successfully your file has been uploaded..! 
         </p>
-        <input class="search__input" type="text" placeholder="Search">
+        <input class="search__input" type="text" id="searchBox" placeholder="Search functions here..">
+    </div>
+    <div id="functionResults" class="dropdown-content">
+        <!-- Search results will be displayed here -->
     </div>
     
     <div class="credits__container">
         <p class="credits__text">start searching for your function..!</p>
     </div>
+
+    <div id="0001" class="popup">
+        <span class="close" onclick="closeInputPopup('0001')">&times;</span>
+        <form id="form_0001" method="post" name="functionInput1" action="{% url 'fun_0001' %}">
+            {% csrf_token %}
+            <h2>Enter the number of rows from the top : </h2>
+            <input type="text" name="functionInput1" placeholder="Enter rows">
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+
+    <div id="0002" class="popup">
+        <span class="close" onclick="closeInputPopup('0002')">&times;</span>
+        <form id="form_0002" method="post" name="functionInput1" action="{% url 'fun_0002' %}">
+            {% csrf_token %}
+            <h2>Enter the number of rows from the bottom :</h2>
+            <input type="text" name="functionInput1" placeholder="Enter rows">
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+
+    <div id="0003" class="popup">
+        <span class="close" onclick="closeInputPopup('0003')">&times;</span>
+        <form id="form_0002" method="post" name="functionInput1" action="{% url 'fun_0003' %}">
+            {% csrf_token %}
+            <h2>Enter the column name :</h2>
+            <input type="text" name="functionInput1" placeholder="Enter Column">
+            <h2>Enter the keyword :</h2>
+            <input type="text" name="functionInput2" placeholder="Enter keyword">
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+
+    <div id="0004" class="popup">
+        <span class="close" onclick="closeInputPopup('0004')">&times;</span>
+        <form id="form_0002" method="post" name="functionInput1" action="{% url 'fun_0004' %}">
+            {% csrf_token %}
+            <h2>Enter the column name :</h2>
+            <input type="text" name="functionInput1" placeholder="Enter Column">
+            <h2>Enter the keyword :</h2>
+            <input type="text" name="functionInput2" placeholder="Enter keyword">
+            <label for="comparison_operator">Select Comparison Operator:</label>
+            <label>
+                <input type="radio" name="functionInput3" value="greater_than"> Greater Than
+            </label>
+            <label>
+                <input type="radio" name="functionInput3" value="lesser_than"> Lesser Than
+            </label>
+            <label>
+                <input type="radio" name="functionInput3" value="equal_to"> Equal To
+            </label>
+            <label>
+                <input type="radio" name="functionInput3" value="not_equal_to"> Not Equal To
+            </label>
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+
+    {% if csv_details.flag %}
     <div class="container">
         <h2>CSV Analysis Results</h2>
     <p>Number of rows: {{ csv_details.num_rows }}</p>
@@ -36,5 +98,78 @@
         {% endfor %}
     </ul>
     </div>
+    {% endif %}
+
+    <!-- Second Div - Displayed when csvdetails.flag is False -->
+    {% if not csv_details.flag %}
+    <div class="container">
+        <br>
+        {{ csv_details.df_html|safe }}
+    </div>
+    {% endif %}
+
+    <script>
+        // Sample list of functions with their IDs
+        const functions = [
+            { id: '0001', name: 'Head' },
+            { id: '0002', name: 'Tail' },
+            { id: '0003', name: 'Column-Keyword' },
+            { id: '0004', name: 'Column-Keyword-Compare' }
+        ];
+    
+        // Get references to elements
+        const searchBox = document.getElementById('searchBox');
+        const functionResults = document.getElementById('functionResults');
+    
+        // Add event listener to the search box
+        searchBox.addEventListener('input', function() {
+            const searchValue = this.value.toLowerCase();
+            const filteredFunctions = functions.filter(func => func.name.toLowerCase().includes(searchValue));
+            displayFilteredFunctions(filteredFunctions.slice(0, 4)); // Display only top 4 results
+        });
+    
+        // Function to display filtered functions
+        function displayFilteredFunctions(filteredFunctions) {
+            // Clear previous results
+            functionResults.innerHTML = '';
+            // Add filtered functions to the list
+            filteredFunctions.forEach(func => {
+                const listItem = document.createElement('a');
+                listItem.textContent = func.name;
+                listItem.setAttribute('data-function-id', func.id);
+                listItem.style.cursor = 'pointer';
+                listItem.addEventListener('click', function() {
+                    showFunctionInputPopup(func.id);
+                });
+                functionResults.appendChild(listItem);
+            });
+            // Display the dropdown
+            functionResults.style.display = filteredFunctions.length ? 'block' : 'none';
+        }
+    
+        // Function to show popup for function input
+        function showFunctionInputPopup(functionId) {
+            const popup = document.getElementById(functionId);
+            if (popup) {
+                popup.style.display = 'block';
+            }
+        }
+    
+        // Function to close the input popup
+        function closeInputPopup(functionId) {
+            const popup = document.getElementById(functionId);
+            if (popup) {
+                popup.style.display = 'none';
+            }
+        }
+    
+        // Event listener to close the search results when clicking outside
+        window.addEventListener('click', function(event) {
+            if (event.target !== searchBox && event.target.parentNode !== functionResults) {
+                functionResults.style.display = 'none';
+            }
+        });
+    </script>
+    
 </body>
 </html>

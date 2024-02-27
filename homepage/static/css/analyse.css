@@ -2,9 +2,90 @@
 
 /* Base styling */
 
+/* CSS for the dropdown menu */
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    width: 25%;
+    background-color: #b6d2d5;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    z-index: 1;
+}
+
+.dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+.dropdown-content a:hover {
+    background-color: #f1f1f1;
+}
+
+/* Popup styles */
+.popup {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgba(173, 216, 230, 0.9); /* Light blue with opacity */
+    padding: 20px;
+    border-radius: 10px; /* Rounded corners */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3); /* Box shadow for depth */
+    z-index: 1000;
+    backdrop-filter: blur(5px); /* Blurring effect */
+}
+
+/* Close button for the popup */
+.close {
+    position: absolute;
+    top: 8px;
+    right: 16px;
+    color: #333; /* Darker color for visibility */
+    font-size: 20px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+/* Input field styles */
+.popup input[type="text"] {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: none;
+    border-radius: 5px;
+    box-sizing: border-box;
+    font-size: 16px;
+}
+
+/* Submit button styles */
+.popup button[type="submit"] {
+    background-color: #3498db; /* Blue color for the button */
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+/* Submit button hover effect */
+.popup button[type="submit"]:hover {
+    background-color: #2980b9; /* Darker blue on hover */
+}
+
+
 body {
     width: 430px;
     margin: 0 auto;
+    background-color: #10dceb;
     font-family: 'Raleway', sans-serif;
 }
 
@@ -16,7 +97,7 @@ body {
     font-size: 22px;
     font-weight: 900;
     text-align: center;
-    color: #ff8b88;
+    color: #190be4;
 }
 
 .search__input {
