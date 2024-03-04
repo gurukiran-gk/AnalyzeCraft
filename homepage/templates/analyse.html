@@ -86,6 +86,32 @@
         </form>
     </div>
 
+    <div id="0005" class="popup">
+        <span class="close" onclick="closeInputPopup('0005')">&times;</span>
+        <form id="form_0002" method="post" name="functionInput1" action="{% url 'fun_0005' %}">
+            {% csrf_token %}
+            <h2>Enter the column name :</h2>
+            <input type="text" name="functionInput1" placeholder="Enter Column">
+            <h2>Enter the Title :</h2>
+            <input type="text" name="functionInput2" placeholder="Enter Title">
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+
+
+    <div id="0006" class="popup">
+        <span class="close" onclick="closeInputPopup('0006')">&times;</span>
+        <form id="form_0002" method="post" name="functionInput1" action="{% url 'fun_0006' %}">
+            {% csrf_token %}
+            <h2>Enter the X column name :</h2>
+            <input type="text" name="functionInput1" placeholder="Enter Column">
+            <h2>Enter the Y column name  :</h2>
+            <input type="text" name="functionInput2" placeholder="Enter Column">
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+
+
     {% if csv_details.flag %}
     <div class="container">
         <h2>CSV Analysis Results</h2>
@@ -114,7 +140,10 @@
             { id: '0001', name: 'Head' },
             { id: '0002', name: 'Tail' },
             { id: '0003', name: 'Column-Keyword' },
-            { id: '0004', name: 'Column-Keyword-Compare' }
+            { id: '0004', name: 'Column-Keyword-Compare' },
+            { id: '0005', name: 'Bar Graph' },
+            { id: '0006', name: 'Line Graph' }
+
         ];
     
         // Get references to elements

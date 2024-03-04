@@ -145,3 +145,62 @@ def fun_0004(request):
             return HttpResponse("No CSV data found in the session.")
     else:
         return HttpResponse("No JSON data found in the session.")
+    
+
+def fun_0005(request):
+    coloumn = request.POST.get('functionInput1', 0)
+    title = request.POST.get('functionInput2', 0)
+    json_data = request.session.get('json_data')
+    if json_data:
+        json_io = io.StringIO(json_data)
+        data = pd.read_json(json_io)
+        csv_file = data.to_csv(index=False)
+        if csv_file:
+            df = pd.read_csv(io.StringIO(csv_file))
+            
+            plt.figure(figsize = (10,6))
+            plt.bar(df[coloumn].value_counts().index, df[coloumn].value_counts())
+            plt.title(title)
+            plt.show()
+
+            #df_html = df_head.to_html()
+            csv_details = {
+                'df_html': "Start Exploring other function..",
+                'flag': 0
+            }
+            return render(request, 'analyse.html', {'csv_details': csv_details})
+        else:
+            return HttpResponse("No CSV data found in the session.")
+    else:
+        return HttpResponse("No JSON data found in the session.")
+
+
+def fun_0006(request):
+    X = request.POST.get('functionInput1', 0)
+    Y = request.POST.get('functionInput2', 0)
+    json_data = request.session.get('json_data')
+    if json_data:
+        json_io = io.StringIO(json_data)
+        data = pd.read_json(json_io)
+        csv_file = data.to_csv(index=False)
+        if csv_file:
+            df = pd.read_csv(io.StringIO(csv_file))
+            
+            plt.figure(figsize=(10, 6))
+            sns.lineplot(data=df, x=X, y=Y)
+            plt.title('Line Plot')
+            plt.xlabel(X)
+            plt.ylabel(Y)
+            plt.grid(True)
+            plt.show()
+
+            #df_html = df_head.to_html()
+            csv_details = {
+                'df_html': "Start Exploring other function..",
+                'flag': 0
+            }
+            return render(request, 'analyse.html', {'csv_details': csv_details})
+        else:
+            return HttpResponse("No CSV data found in the session.")
+    else:
+        return HttpResponse("No JSON data found in the session.")
