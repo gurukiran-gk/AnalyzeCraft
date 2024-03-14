@@ -12,6 +12,7 @@
         .container {
             margin-left: -400px; /* Horizontally center the container */
         }
+
     </style>
 </head>
 <body>
@@ -24,6 +25,9 @@
     <div id="functionResults" class="dropdown-content">
         <!-- Search results will be displayed here -->
     </div>
+
+    <button id="openDashboard" class="toggleDashboard">f</button>
+    
     
     <div class="credits__container">
         <p class="credits__text">start searching for your function..!</p>
@@ -111,18 +115,42 @@
         </form>
     </div>
 
+    <div id="0007" class="popup">
+        <span class="close" onclick="closeInputPopup('0006')">&times;</span>
+        <form id="form_0002" method="post" name="functionInput1" action="{% url 'fun_0007' %}">
+            {% csrf_token %}
+            <h2>Enter the column name :</h2>
+            <input type="text" name="functionInput1" placeholder="Enter Column">
+            <button type="submit">Submit</button>
+        </form>
+    </div>
 
+
+    <div id="dashboard" class="dashboard">
+        <span class="close" onclick="closeDashboard()">&times;</span>
+        <ul>
+          <li>Head</li>
+          <li>Tail</li>
+          <li>Column-Keyword</li>
+          <li>Column-Keyword-Compare</li>
+          <li>Bar Graph</li>
+          <li>Line Graph</li>
+          <li>Pie Chart</li>
+        </ul>
+      </div>
+
+      
     {% if csv_details.flag %}
     <div class="container">
-        <h2>CSV Analysis Results</h2>
+        <marquee><h2>CSV Analysis Results</h2></marquee>
     <p>Number of rows: {{ csv_details.num_rows }}</p>
     <p>Number of columns: {{ csv_details.num_columns }}</p>
     <p>Column names:</p>
-    <ul>
+    <ol>
         {% for column_name in csv_details.column_names %}
             <li>{{ column_name }}</li>
         {% endfor %}
-    </ul>
+    </ol>
     </div>
     {% endif %}
 
@@ -142,8 +170,8 @@
             { id: '0003', name: 'Column-Keyword' },
             { id: '0004', name: 'Column-Keyword-Compare' },
             { id: '0005', name: 'Bar Graph' },
-            { id: '0006', name: 'Line Graph' }
-
+            { id: '0006', name: 'Line Graph' },
+            { id: '0007', name: 'Pie Chart' },
         ];
     
         // Get references to elements
@@ -154,7 +182,7 @@
         searchBox.addEventListener('input', function() {
             const searchValue = this.value.toLowerCase();
             const filteredFunctions = functions.filter(func => func.name.toLowerCase().includes(searchValue));
-            displayFilteredFunctions(filteredFunctions.slice(0, 4)); // Display only top 4 results
+            displayFilteredFunctions(filteredFunctions.slice(0, 7)); 
         });
     
         // Function to display filtered functions
@@ -198,6 +226,15 @@
                 functionResults.style.display = 'none';
             }
         });
+
+        document.getElementById("openDashboard").addEventListener("click", function() {
+        document.getElementById("dashboard").style.right = "0"; // Slide in from right
+        });
+
+        function closeDashboard() {
+        document.getElementById("dashboard").style.right = "-250px"; // Slide out to right
+        }
+
     </script>
     
 </body>
